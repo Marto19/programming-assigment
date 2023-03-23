@@ -104,40 +104,64 @@ public class Main {
                 totalBeforeDiscount = totalBeforeDiscount.add(cost);
 
                 //calculating additional volume discount below
-                switch (clientID){
+                switch (clientID) {
                     case 1:
-                        if(orderedQuantity[i] <= 10000 && orderedQuantity[i] != 0){
-                            totalAfterDiscount = totalAfterDiscount.add(cost.subtract(cost.multiply(basicClientDiscount[0])));
-                            System.out.println("workin?: " + totalAfterDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
-                            break;
+                        if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) < 0) {
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(basicClientDiscount[0]));
+                        } else if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) > 0) {
+
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(new BigDecimal(0.02)));
+
+                        } else if( (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) > 0) && (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) < 0)){
+                            totalAfterDiscount = totalBeforeDiscount;
                         }
+                        break;
                     case 2:
-                        if(orderedQuantity[i] <= 10000 && orderedQuantity[i] != 0){
-                            totalAfterDiscount = totalAfterDiscount.add(cost.subtract(cost.multiply(basicClientDiscount[1])));
-                            break;
+                        if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) < 0) {
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(basicClientDiscount[1]));
+                        } else if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) > 0) {
+
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(new BigDecimal(0.02)));
+
+                        } else if( (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) > 0) && (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) < 0)){
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(new BigDecimal(0.01)));
                         }
+                        break;
                     case 3:
-                        if(orderedQuantity[i] <= 10000 && orderedQuantity[i] != 0){
-                            totalAfterDiscount = totalAfterDiscount.add(cost.subtract(cost.multiply(basicClientDiscount[2])));
-                            break;
+                        if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) < 0) {
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(basicClientDiscount[2]));
+                        } else if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) > 0) {
+
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(new BigDecimal(0.03)));
+
+                        } else if( (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) > 0) && (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) < 0)){
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(new BigDecimal(0.01)));
                         }
+                        break;
                     case 4:
-                        if(orderedQuantity[i] <= 10000 && orderedQuantity[i] != 0){
-                            totalAfterDiscount = totalAfterDiscount.add(cost.subtract(cost.multiply(basicClientDiscount[3])));
-                            break;
+                        if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) < 0) {
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(basicClientDiscount[3]));
+                        } else if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) > 0) {
+
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(new BigDecimal(0.05)));
+
+                        } else if( (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) > 0) && (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) < 0)){
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(new BigDecimal(0.03)));
                         }
+                        break;
                     case 5:
-                        if(orderedQuantity[i] <= 10000 && orderedQuantity[i] != 0){
-                            if(basicClientDiscount[i].compareTo(BigDecimal.ZERO) == 1){
-                                totalAfterDiscount = totalBeforeDiscount;
-                                System.out.println(totalBeforeDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
-                            }
-                            else{
-                                System.out.println("workin?: " + totalAfterDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
-                                totalAfterDiscount = totalAfterDiscount.add(cost.subtract(cost.multiply(basicClientDiscount[4])));
-                                break;
-                            }
+                        if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) < 0) {
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(basicClientDiscount[4]));
+                        } else if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) > 0) {
+
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(new BigDecimal(0.07)));
+
+                        } else if( (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) > 0) && (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) < 0)){
+                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(new BigDecimal(0.05)));
                         }
+                        break;
+                    default:
+                        System.out.println("Invalid client ID");
                 }
             }
         }
@@ -146,7 +170,7 @@ public class Main {
 
         System.out.println();
         System.out.println("Total price for all products before discount: " + totalBeforeDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
-        System.out.println("Total price for all products after client discount: " + totalAfterDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
+        System.out.println("Total price for all products after every discount: " + totalAfterDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
 
     }
     public void additionalVolumeDiscount(short clientId, int orderedQuantity[]){
