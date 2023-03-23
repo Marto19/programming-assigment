@@ -155,15 +155,69 @@ public class Main {
         System.out.println("id: " + clientID);
 
         System.out.println();
-        System.out.println("Total price for all products before discount: " + totalBeforeDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
-        System.out.println("Total price for all products after every discount: " + totalAfterDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
+        System.out.println("Total price for all products before client discount: " + totalBeforeDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
 
-    }
-    public void additionalVolumeDiscount(short clientId, int orderedQuantity[]){
+        switch (clientID) {
+            case 1:
+                if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) < 0) {                                 //checks if total is below 10000
+                    System.out.println("Basic client discount of 5%");
+                } else if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) > 0) {                              //checks if total is above 30000
 
-    }
+                    System.out.println("Additional volume discount for total above 30000: 2%");
 
-    public void displayInfo(){
+                } else if( (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) > 0) && (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) < 0)){
+                    System.out.println("Additional volume discount for total above 10000 and below 30000: 0%");
+                }
+                break;
+            case 2:
+                if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) < 0) {                                  //checks if total is below 10000
+                    System.out.println("Basic client discount of 4%");
+                } else if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) > 0) {                                      //checks if total is above 30000
+
+                    System.out.println("Additional volume discount for total above 30000: 2%");
+
+                } else if( (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) > 0) && (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) < 0)){
+                    System.out.println("Additional volume discount for total above 10000 and below 30000: 1%");
+                }
+                break;
+            case 3:
+                if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) < 0) {                                      //checks if total is below 10000
+                    System.out.println("Basic client discount of 3%");
+                } else if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) > 0) {                                   //checks if total is above 30000
+
+                    System.out.println("Additional volume discount for total above 30000: 3%");
+
+                } else if( (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) > 0) && (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) < 0)){
+                    System.out.println("Additional volume discount for total above 10000 and below 30000: 1%");
+                }
+                break;
+            case 4:
+                if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) < 0) {                                          //checks if total is below 10000
+                    System.out.println("Basic client discount of 2%");
+                } else if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) > 0) {                                  //checks if total is above 30000
+
+                    System.out.println("Additional volume discount for total above 30000: 5%");
+
+                } else if( (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) > 0) && (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) < 0)){
+                    System.out.println("Additional volume discount for total above 10000 and below 30000: 3%");
+                }
+                break;
+            case 5:                                                                                                          //checks if total is below 10000
+                if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) < 0) {
+                    System.out.println("Basic client discount of 0%");
+                } else if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) > 0) {                                      //checks if total is above 30000
+
+                    System.out.println("Additional volume discount for total above 30000: 7%");
+
+                } else if( (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) > 0) && (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) < 0)){
+                    System.out.println("Additional volume discount for total above 10000 and below 30000: 5%");
+                }
+                break;
+            default:
+                System.out.println("Invalid client ID");
+        }
+
+        System.out.println("Total price for all products after every discount: " + totalAfterDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));   //TOTAL AFTER EVERY DISCOUNT
 
     }
 
