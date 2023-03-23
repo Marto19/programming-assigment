@@ -5,15 +5,14 @@ import java.util.Scanner;
 
 public class Main {
 
-    public void recieveAndCheckId(short clientId){                                                                      //method to receive and check if ID is correctly entered
+    public short recieveAndCheckId(short clientId) {
         Scanner scanner = new Scanner(System.in);
-        if(clientId < 1 || clientId > 5){                                                                               //if the ID is below 1 and above 5
-            while(clientId < 1 || clientId > 5){                                                                        //while that is true,
-                System.out.print("Wrong ID. ID must be from 1 to 5. Please try again: ");
-                clientId = scanner.nextShort();                                                                         //enter again and again until correct properties
-            }
+        while (clientId < 1 || clientId > 5) {
+            System.out.print("Wrong ID. ID must be from 1 to 5. Please try again: ");
+            clientId = scanner.nextShort();
         }
-        System.out.println("You're ID is: " + clientId);                                                                //print the ID
+        //System.out.println("Your ID is: " + clientId);
+        return clientId;
     }
 
     public void recieveAndCheckAmount(int orderedQuantity[]){                                                           //method to receive and check if ordered amount is a valid number
@@ -40,17 +39,17 @@ public class Main {
             BigDecimal cost = BigDecimal.ZERO;
 
             System.out.println();
-            System.out.println("Quantity ordered for " + (char)('A' + (i)) + ": " + orderedQuantity[i]);                //prints ordered quantity
+            System.out.print("Quantity ordered for " + (char)('A' + (i)) + ": " + orderedQuantity[i] + " | ");                //prints ordered quantity
 
-            System.out.println("Base unit price: " + unitCostEUR[i].setScale(2, BigDecimal.ROUND_HALF_UP));     //prints base unit price
+            System.out.print("Base unit price: " + unitCostEUR[i].setScale(2, BigDecimal.ROUND_HALF_UP) + " | ");     //prints base unit price
 
             if(productPromotion[i].compareTo(BigDecimal.ZERO) == 0){                                                    //checks if value of index i of product promotion is 0. if so, no promotion
-                System.out.println("No product promotion for " + (char) ('A' + i));
+                System.out.print("No product promotion for " + (char) ('A' + i) + " | ");
             }else if(i == 3) {                                                                                          //if index is 3, the product promotion is a message
-                System.out.println("Product promotion is: Buy two, get one free");
+                System.out.print("Product promotion is: Buy two, get one free | ");
             }else{                                                                                                      //else, print the product promotion in percentage
-                System.out.println("Product promotion is: " + (productPromotion[i].multiply(new BigDecimal(100))).setScale(0, BigDecimal.ROUND_HALF_UP) + "% off."
-                + ", on average for 100 items: ");
+                System.out.print("Product promotion is: " + (productPromotion[i].multiply(new BigDecimal(100))).setScale(0, BigDecimal.ROUND_HALF_UP) + "% off."
+                + " | ");
             }
 
             if (BigDecimal.valueOf(orderedQuantity[i]).compareTo(BigDecimal.ZERO) == 0) {                               //checks if
@@ -156,8 +155,6 @@ public class Main {
             }
         }
 
-        System.out.println("id: " + clientID);
-
         System.out.println();
         System.out.println("Total price for all products before client discount: " + totalBeforeDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
 
@@ -239,14 +236,15 @@ public class Main {
 
 
         System.out.print("Please input your ID: ");
-        final short clientId = scanner.nextShort();                           //final ID, so it cannot be changed, and short for 1-5
+        short clientId = scanner.nextShort();                           //final ID, so it cannot be changed, and short for 1-5
 
-        main.recieveAndCheckId(clientId);                                     //1. receive and check ID
+        clientId = main.recieveAndCheckId(clientId);                                     //1. receive and check ID. correct ID if necessary
+        final short finalClientId = clientId;                                               //makes the ID unchangable
 
         System.out.println("Please enter your desired amount for each product");
 
         main.recieveAndCheckAmount(orderedQuantity);                          //2. receive and check amount
-        main.calculateUnitsPrice(orderedQuantity, markup, unitCostEUR, productPromotion, clientId);     //3. calculate units price
+        main.calculateUnitsPrice(orderedQuantity, markup, unitCostEUR, productPromotion, finalClientId);     //3. calculate units price
 
 
     }
