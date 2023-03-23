@@ -7,7 +7,6 @@ public class Main {
 
     public void recieveAndCheckId(short clientId){
         Scanner scanner = new Scanner(System.in);
-        clientId = scanner.nextShort();
         if(clientId < 1 || clientId > 5){
             while(clientId < 1 || clientId > 5){
                 System.out.print("Wrong ID. ID must be from 1 to 5. Please try again: ");
@@ -55,8 +54,7 @@ public class Main {
             BigDecimal cost = BigDecimal.ZERO;
 
             System.out.println();
-            System.out.print("Quantity ordered for " + (char)('A' + (i)) + ": ");
-            System.out.println(orderedQuantity[i]);
+            System.out.println("Quantity ordered for " + (char)('A' + (i)) + ": " + orderedQuantity[i]);
 
             System.out.println("Base unit price: " + unitCostEUR[i].setScale(2, BigDecimal.ROUND_HALF_UP));
 
@@ -83,7 +81,6 @@ public class Main {
                     cost = unitCostEUR[i].add(markup[i]);
                 }
 
-
                 cost = cost.multiply(BigDecimal.valueOf(orderedQuantity[i]));
                 //System.out.println("Total price(in EURO) for this product: " + cost.setScale(2, BigDecimal.ROUND_HALF_UP));
 
@@ -91,18 +88,18 @@ public class Main {
                 if (productPromotion[i].compareTo(BigDecimal.ZERO) > 0) {
                     if(i == 3){
                         //BigDecimal discount = cost.add(productPromotion[i]);
-                        System.out.println("Units " + (char) ('A' + i) + " quantity without promotion: " + orderedQuantity[i]);
-                        System.out.println("Units " + (char) ('A' + i) + " quantity with promotion: " + (orderedQuantity[i] +  orderedQuantity[i]/2));
+                        System.out.println("Units " + (char) ('A' + i) + " quantity without promotion after markup: " + orderedQuantity[i]);
+                        System.out.println("Units " + (char) ('A' + i) + " quantity with promotion after markup: " + (orderedQuantity[i] +  orderedQuantity[i]/2));
                         orderedQuantity[i] = orderedQuantity[i] +  orderedQuantity[i]/2;
 
                     }else{
                         BigDecimal discount = cost.divide(BigDecimal.valueOf(3), 2, BigDecimal.ROUND_HALF_UP);
                         //System.out.println("Units " + (char) ('A' + i) + " quantity cost in euro (no discount): " + cost.setScale(2, BigDecimal.ROUND_HALF_UP));
                         cost = cost.subtract(discount);
-                        System.out.println("Units " + (char) ('A' + i) + "Total price(in EURO) for this product(with discount): " + cost.setScale(2, BigDecimal.ROUND_HALF_UP));
+                        System.out.println("Total price(in EURO) for this product(with discount) after markup: " + cost.setScale(2, BigDecimal.ROUND_HALF_UP));
                     }
                 } else {
-                    System.out.println("Total price(in EURO) for this product: " + cost.setScale(2, BigDecimal.ROUND_HALF_UP));
+                    System.out.println("Total price(in EURO) for this product after markup: " + cost.setScale(2, BigDecimal.ROUND_HALF_UP));
                 }
                 totalBeforeDiscount = totalBeforeDiscount.add(cost);
 
@@ -110,30 +107,46 @@ public class Main {
                 switch (clientID){
                     case 1:
                         if(orderedQuantity[i] <= 10000 && orderedQuantity[i] != 0){
-                            totalAfterDiscount = cost.multiply(basicClientDiscount[0]);
+                            totalAfterDiscount = totalAfterDiscount.add(cost.subtract(cost.multiply(basicClientDiscount[0])));
+                            System.out.println("workin?: " + totalAfterDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
+                            break;
                         }
                     case 2:
                         if(orderedQuantity[i] <= 10000 && orderedQuantity[i] != 0){
-                            totalAfterDiscount = cost.multiply(basicClientDiscount[1]);
+                            totalAfterDiscount = totalAfterDiscount.add(cost.subtract(cost.multiply(basicClientDiscount[1])));
+                            break;
                         }
                     case 3:
                         if(orderedQuantity[i] <= 10000 && orderedQuantity[i] != 0){
-                            totalAfterDiscount = cost.multiply(basicClientDiscount[2]);
+                            totalAfterDiscount = totalAfterDiscount.add(cost.subtract(cost.multiply(basicClientDiscount[2])));
+                            break;
                         }
                     case 4:
                         if(orderedQuantity[i] <= 10000 && orderedQuantity[i] != 0){
-                            totalAfterDiscount = cost.multiply(basicClientDiscount[3]);
+                            totalAfterDiscount = totalAfterDiscount.add(cost.subtract(cost.multiply(basicClientDiscount[3])));
+                            break;
                         }
                     case 5:
                         if(orderedQuantity[i] <= 10000 && orderedQuantity[i] != 0){
-                            totalAfterDiscount = cost.multiply(basicClientDiscount[4]);
+                            if(basicClientDiscount[i].compareTo(BigDecimal.ZERO) == 1){
+                                totalAfterDiscount = totalBeforeDiscount;
+                                System.out.println(totalBeforeDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
+                            }
+                            else{
+                                System.out.println("workin?: " + totalAfterDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
+                                totalAfterDiscount = totalAfterDiscount.add(cost.subtract(cost.multiply(basicClientDiscount[4])));
+                                break;
+                            }
                         }
                 }
             }
         }
+
+        System.out.println("id: " + clientID);
+
         System.out.println();
         System.out.println("Total price for all products before discount: " + totalBeforeDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
-        System.out.println("Total price for all products after discount: " + totalAfterDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
+        System.out.println("Total price for all products after client discount: " + totalAfterDiscount.setScale(2, BigDecimal.ROUND_HALF_UP));
 
     }
     public void additionalVolumeDiscount(short clientId, int orderedQuantity[]){
@@ -161,9 +174,9 @@ public class Main {
 
         BigDecimal quantityUnitCost[] = new BigDecimal[4];
 
+        System.out.print("Please input your ID: ");
         final short clientId = scanner.nextShort();
 
-        System.out.print("Please input your ID: ");
         main.recieveAndCheckId(clientId);
 
         System.out.print("Please enter your desired amount for each product");
