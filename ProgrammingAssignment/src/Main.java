@@ -137,7 +137,11 @@ public class Main {
                         break;
                     case 5:                                                                                                          //checks if total is below 10000
                         if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(10000)) < 0) {
-                            totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(basicClientDiscount[4]));
+                            if (basicClientDiscount[4].compareTo(BigDecimal.valueOf(1)) == 0){
+                                totalAfterDiscount = totalBeforeDiscount;
+                            }else{
+                                totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(basicClientDiscount[4]));
+                            }
                         } else if (totalBeforeDiscount.compareTo(BigDecimal.valueOf(30000)) > 0) {                                      //checks if total is above 30000
 
                             totalAfterDiscount = totalBeforeDiscount.subtract(totalBeforeDiscount.multiply(new BigDecimal(0.07)));
