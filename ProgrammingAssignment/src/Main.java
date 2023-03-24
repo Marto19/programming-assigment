@@ -226,7 +226,7 @@ public class Main {
         //arrays to store values with same functionality
         BigDecimal unitCostEUR[] = { new BigDecimal(0.52), new BigDecimal(0.38), new BigDecimal(0.41), new BigDecimal(0.60) };      //unit cost in euro
         BigDecimal markup[] = { new BigDecimal(0.8), new BigDecimal(1.2), new BigDecimal(0.9), new BigDecimal(1) };
-        BigDecimal productPromotion[] = { new BigDecimal(0.5), new BigDecimal(0.5), new BigDecimal(0), BigDecimal.valueOf(orderedQuantity[3]/2) };
+        BigDecimal productPromotion[] = { new BigDecimal(0), new BigDecimal(0.3), new BigDecimal(0), BigDecimal.valueOf(orderedQuantity[3]/2) };
 
 
         System.out.print("Please input your ID: ");
