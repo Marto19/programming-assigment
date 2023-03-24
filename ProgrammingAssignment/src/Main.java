@@ -43,13 +43,10 @@ public class Main {
 
             System.out.print("Base unit price: " + unitCostEUR[i].setScale(2, BigDecimal.ROUND_HALF_UP) + " | ");     //prints base unit price
             //below its says wether it has product promotion or not
-
-            if(productPromotion[i].compareTo(BigDecimal.ZERO) == 0){
-                if(i == 3) {                               //checks if value of index i of product promotion is 0. if so, no promotion                                                           //if index is 3, the product promotion is a message
-                    System.out.print("Product promotion is: Buy two, get one free | ");
-                }else{
-                    System.out.print("No price product promotion for " + (char) ('A' + i) + " | ");
-                }
+            if(productPromotion[i].compareTo(BigDecimal.ZERO) == 0){                                                    //checks if value of index i of product promotion is 0. if so, no promotion
+                System.out.print("No product promotion for " + (char) ('A' + i) + " | ");
+            }else if(i == 3) {                                                                                          //if index is 3, the product promotion is a message
+                System.out.print("Product promotion is: Buy two, get one free | ");
             }else{                                                                                                      //else, print the product promotion in percentage
                 System.out.print("Product promotion is: " + (productPromotion[i].multiply(new BigDecimal(100))).setScale(0, BigDecimal.ROUND_HALF_UP) + "% off."
                 + " | ");
@@ -72,12 +69,12 @@ public class Main {
 
                 //below, the product promotion is applied if there is one
                 if (productPromotion[i].compareTo(BigDecimal.ZERO) > 0) {               //if the product promotion is bigger than 0 execute the code below
-                    if(i == 3){                                                         //if the index = 3, we are at the "Buy 2, get 3rd free" promotion
+                    if(i == 3){                                                         //if the index = 3, we are at the "Buy 2, get 3rd free" prmotion
                         System.out.println("Units " + (char) ('A' + i) + " quantity without promotion: " + orderedQuantity[i]);            //quantity before promotion
                         System.out.println("Units " + (char) ('A' + i) + " quantity with promotion: " + (orderedQuantity[i] +  orderedQuantity[i]/2));
                         orderedQuantity[i] = orderedQuantity[i] +  orderedQuantity[i]/2;     //quantity being updated
 
-                    }else{  // if the other INDEXES
+                    }else{  // if the other IDEXES
                         cost = cost.subtract(cost.multiply(productPromotion[i]));
                         System.out.println("Total price(in EURO) for this product(with discount) after markup: " + cost.setScale(2, BigDecimal.ROUND_HALF_UP));
                     }
@@ -229,7 +226,7 @@ public class Main {
         //arrays to store values with same functionality
         BigDecimal unitCostEUR[] = { new BigDecimal(0.52), new BigDecimal(0.38), new BigDecimal(0.41), new BigDecimal(0.60) };      //unit cost in euro
         BigDecimal markup[] = { new BigDecimal(0.8), new BigDecimal(1.2), new BigDecimal(0.9), new BigDecimal(1) };
-        BigDecimal productPromotion[] = { new BigDecimal(0), new BigDecimal(0.3), new BigDecimal(0), BigDecimal.valueOf(orderedQuantity[3]/2) };
+        BigDecimal productPromotion[] = { new BigDecimal(0.5), new BigDecimal(0.5), new BigDecimal(0), BigDecimal.valueOf(orderedQuantity[3]/2) };
 
 
         System.out.print("Please input your ID: ");
