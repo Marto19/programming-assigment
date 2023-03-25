@@ -3,7 +3,7 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Main {
-    public Main() {
+    public static void main() {
     }
 
     public short recieveAndCheckId(short clientId) {
