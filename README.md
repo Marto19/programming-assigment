@@ -12,3 +12,5 @@ To run application from Main.java:
 3. write: java Main.java
 4. the program should start.
 5. enter data
+
+location: ProgrammingAssignment\src\
